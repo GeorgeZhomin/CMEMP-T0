@@ -61,7 +61,7 @@ double bisection(double (*f)(double, double), double x0, double alpha, double a,
 }
 
 //delta = (1-q)/q*epsilon
-double simple_iter(double (*phi)(double, double), double x0, double alpha, double a, double b, double delta)
+double simple_iter(double (*phi)(double, double), double x0, double alpha, double delta)
 {
     std::ofstream file("output.txt", std::ios::app);
     double x = x0;
@@ -77,7 +77,7 @@ double simple_iter(double (*phi)(double, double), double x0, double alpha, doubl
 }
 
 //delta = m/(M-m)*epsilon
-double newton(double (*f)(double, double), double x0, double alpha, double a, double b, double delta)
+double newton(double (*f)(double, double), double x0, double alpha, double delta)
 {
     std::ofstream file("output.txt", std::ios::app);
     const double h = std::cbrt(std::numeric_limits<double>::epsilon());
@@ -94,7 +94,7 @@ double newton(double (*f)(double, double), double x0, double alpha, double a, do
 }
 
 //delta = (1-q)/q*epsilon
-double aitken(double (*phi)(double, double), double x0, double alpha, double a, double b, double delta)
+double aitken(double (*phi)(double, double), double x0, double alpha, double delta)
 {
     std::ofstream file("output.txt", std::ios::app);
     double x = x0, x1, x2;
@@ -117,10 +117,13 @@ int main()
     double x0 = (a+b)/2;
     std::ofstream file("output.txt");
     file.close();
-    secant(f, x0, 1, a, b, m/(M-m)*epsilon);
-    bisection(f, x0, 1, a, b, epsilon);
-    simple_iter(phi, x0, 1, a, b, (1-q)/q*epsilon);
-    newton(f, x0, 1, a, b, m/(M-m)*epsilon);
-    aitken(phi, x0, 1, a, b, (1-q)/q*epsilon);
+    for (int alpha = 1; alpha < 6; alpha++)
+    {
+        secant(f, x0, 1, a, b, m/(M-m)*epsilon);
+        bisection(f, x0, 1, a, b, epsilon);
+        simple_iter(phi, x0, 1, (1-q)/q*epsilon);
+        newton(f, x0, 1, m/(M-m)*epsilon);
+        aitken(phi, x0, 1, (1-q)/q*epsilon);
+    }
     return 0;
 }
