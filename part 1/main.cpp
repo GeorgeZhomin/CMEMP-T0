@@ -119,11 +119,11 @@ int main()
     file.close();
     for (int alpha = 1; alpha < 6; alpha++)
     {
-        secant(f, x0, 1, a, b, m/(M-m)*epsilon);
-        bisection(f, x0, 1, a, b, epsilon);
-        simple_iter(phi, x0, 1, (1-q)/q*epsilon);
-        newton(f, x0, 1, m/(M-m)*epsilon);
-        aitken(phi, x0, 1, (1-q)/q*epsilon);
+        secant(f, x0, alpha, a, b, m/(M-m)*epsilon);
+        bisection(f, x0, alpha, a, b, epsilon);
+        simple_iter(phi, x0, alpha, (1-q)/q*epsilon);
+        newton(f, x0, alpha, m/(M-m)*epsilon);
+        aitken(phi, x0, alpha, (1-q)/q*epsilon);
     }
     return 0;
 }
